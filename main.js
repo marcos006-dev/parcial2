@@ -4,14 +4,17 @@ import * as tmImage from '@teachablemachine/image';
 let model, webcam, labelContainer, maxPredictions;
 
 const iniciar = async () => {
+  document.getElementById('comenzar').style.display = "none";
   const modelURL = './modelo/model.json';
   const metadataURL = './modelo/metadata.json';
+  document.getElementById('spinner').style.display = 'block';
   model = await tmImage.load(modelURL, metadataURL);
   maxPredictions = model.getTotalClasses();
   const flip = true;
   webcam = new tmImage.Webcam(400, 400, flip);
   await webcam.setup();
   await webcam.play();
+  document.getElementById('spinner').style.display = "none";
   window.requestAnimationFrame(loop);
 
   document.getElementById('webcam-container').appendChild(webcam.canvas);
